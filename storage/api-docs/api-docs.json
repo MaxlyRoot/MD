@@ -1,0 +1,208 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Gestión de Excel",
+        "description": "API para la gestión de datos de Excel, incluyendo importación, edición, eliminación y consulta.",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/import-reports": {
+            "post": {
+                "tags": [
+                    "Excel"
+                ],
+                "summary": "Importar un archivo Excel",
+                "description": "Sube e importa un archivo Excel para almacenar datos en la base de datos.",
+                "operationId": "989a642a65d975d6836ef72c684eae76",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "file": {
+                                        "description": "Archivo Excel a importar",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Archivo procesado con éxito"
+                    },
+                    "400": {
+                        "description": "Error de validación"
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            }
+        },
+        "/api/excel-data/{id}": {
+            "put": {
+                "tags": [
+                    "Excel"
+                ],
+                "summary": "Actualizar un dato",
+                "description": "Actualiza un dato específico almacenado en la base de datos.",
+                "operationId": "f205f48095676a42208d311acef36539",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del dato a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "value": {
+                                        "description": "Nuevo valor del dato",
+                                        "type": "string"
+                                    },
+                                    "category": {
+                                        "description": "Nueva categoría",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Dato actualizado con éxito"
+                    },
+                    "404": {
+                        "description": "Dato no encontrado"
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Excel"
+                ],
+                "summary": "Eliminar un dato",
+                "description": "Elimina un dato específico de la base de datos.",
+                "operationId": "8ccba13e98fe069c0ae787e0a1bdf660",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del dato a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dato eliminado con éxito"
+                    },
+                    "404": {
+                        "description": "Dato no encontrado"
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            }
+        },
+        "/api/excel-data": {
+            "get": {
+                "tags": [
+                    "Excel"
+                ],
+                "summary": "Obtener todos los datos",
+                "description": "Retorna todos los datos almacenados junto con sus coordenadas asociadas.",
+                "operationId": "e7b6945707b93e0d1bfa64e6010587b5",
+                "responses": {
+                    "200": {
+                        "description": "Datos obtenidos con éxito"
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            }
+        },
+        "/api/highlight-cell/{coordinateId}": {
+            "get": {
+                "tags": [
+                    "Excel"
+                ],
+                "summary": "Resaltar celda en Excel",
+                "description": "Genera un archivo Excel con una celda específica resaltada.",
+                "operationId": "099407dcb89822bbaf6706e14490742a",
+                "parameters": [
+                    {
+                        "name": "coordinateId",
+                        "in": "path",
+                        "description": "ID de la coordenada",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Archivo generado con éxito"
+                    },
+                    "404": {
+                        "description": "Dato o archivo no encontrado"
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            }
+        },
+        "/api/categories": {
+            "get": {
+                "tags": [
+                    "Categorías"
+                ],
+                "summary": "Obtener categorías",
+                "description": "Obtiene todas las categorías disponibles.",
+                "operationId": "8fa39c5b1dfaf972a351f5cb5d62dbf0",
+                "responses": {
+                    "200": {
+                        "description": "Categorías obtenidas con éxito"
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Excel",
+            "description": "Operaciones relacionadas con la gestión de Excel"
+        },
+        {
+            "name": "Categorías",
+            "description": "Categorías"
+        }
+    ]
+}
